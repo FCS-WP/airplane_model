@@ -26,7 +26,7 @@ global $product;
 
     <table class="specifications-table">
         <tr>
-            <h4 class=" fs-6 text-uppercase">Specification</h4>
+            <h6 class="text-uppercase">Specification</h6>
         </tr>
         <tr>
             <th><?php esc_html_e('SKU', 'weiboo'); ?></th>

@@ -1,7 +1,18 @@
-<<<<<<< Updated upstream
-// @import './fonts/fonts';
-=======
 @import "products";
+.product-img {
+  height: 300px;
+  width: 100%;
+}
+.grid-item .product-item {
+  border: 1px solid #ccc;
+}
+.quick-wish {
+  display: none;
+}
+.product-content {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
 
 .weiboo-social-share-btns {
   display: none;
@@ -41,6 +52,16 @@ footer .elementor-7253 .elementor-element.elementor-element-89b2239 img {
   color: #0a4daf !important;
   border: 1px solid #0a4daf;
 }
+.woocommerce-loop-product__title,
+.p-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 25px;
+  -webkit-line-clamp: 2;
+  height: 70px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
 
 .woocommerce-tabs.wc-tabs-wrapper {
   display: none;
@@ -57,29 +78,12 @@ footer .elementor-7253 .elementor-element.elementor-element-89b2239 img {
     color: #0a4daf !important;
   }
 }
-
 #results-wrapper h3 {
   font-size: 18px !important;
   margin-bottom: 0px;
 }
->>>>>>> Stashed changes
 
-body {
-  // display: none !important;
-  text-align: center;
-  padding: 0;
-  margin: 0;
-  height: 100vh;
-  // display: flex;
-  flex-flow: column;
-  justify-content: center;
-  align-items: center;
+#results-wrapper p {
+  font-size: 16px !important;
+  margin-bottom: 0px;
 }
-.entry-summary{
-  background: url(../icons/mics.png);
-}
-// footer {
-//   position: fixed;
-//   bottom: 0px;
-//   color: white;
-// }
