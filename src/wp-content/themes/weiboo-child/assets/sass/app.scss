@@ -1,4 +1,68 @@
+<<<<<<< Updated upstream
 // @import './fonts/fonts';
+=======
+@import "products";
+
+.weiboo-social-share-btns {
+  display: none;
+}
+.weiboo-grid
+  .product-item
+  .product-content
+  .add_to__cart
+  .add_to_cart_inline
+  a.button.ajax_add_to_cart:before,
+.woocommerce.single-product .product .add_to_cart_button:before,
+.woocommerce.archive .product .add_to_cart_button:before,
+.woocommerce.single-product .product .product_type_grouped:before,
+.woocommerce.archive .product .product_type_grouped:before {
+  color: #0a4daf;
+}
+.woocommerce.single-product .product-list .product-img .sale--box .hot,
+.woocommerce.archive .product-list .product-img .sale--box .hot {
+  background: #0a4daf;
+}
+footer .elementor-icon,
+.single-product footer .elementor-icon {
+  display: flex !important;
+}
+footer .elementor-7253 .elementor-element.elementor-element-89b2239 img {
+  filter: brightness(0) invert(1) !important;
+  box-shadow: none !important;
+}
+.page-error .content-area h2 span {
+  color: #0a4daf;
+}
+.page-error .reacbutton {
+  background: #0a4daf;
+}
+.page-error .reacbutton:hover {
+  background: transparent;
+  color: #0a4daf !important;
+  border: 1px solid #0a4daf;
+}
+
+.woocommerce-tabs.wc-tabs-wrapper {
+  display: none;
+}
+@media (max-width: 920px) {
+  .menu-wrap-off .inner-offcan .nav-link-container .close-button {
+    background: #0a4daf;
+    color: white !important;
+  }
+  .current_page_item a {
+    color: #0a4daf;
+  }
+  .sidenav .widget_nav_menu ul li a:hover {
+    color: #0a4daf !important;
+  }
+}
+
+#results-wrapper h3 {
+  font-size: 18px !important;
+  margin-bottom: 0px;
+}
+>>>>>>> Stashed changes
 
 body {
   // display: none !important;
