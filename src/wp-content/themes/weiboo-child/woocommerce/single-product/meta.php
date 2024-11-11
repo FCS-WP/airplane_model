@@ -61,7 +61,7 @@ global $product;
             <td><?php echo esc_html('N/A'); ?></td>
         </tr>
         <tr>
-            <th><?php esc_html_e('Date of Collection', 'weiboo'); ?></th>
+            <th><?php esc_html_e('Available From', 'weiboo'); ?></th>
             <td><?php echo esc_html('N/A'); ?></td>
         </tr>
     </table>
