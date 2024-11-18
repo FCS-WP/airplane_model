@@ -20,6 +20,9 @@ if (! defined('ABSPATH')) {
 }
 
 global $product;
+
+$brands = get_the_terms($product->get_id(), 'pwb-brand');
+
 ?>
 <div class="product_meta">
     <?php do_action('woocommerce_product_meta_start'); ?>
@@ -33,37 +36,23 @@ global $product;
             <td> <?php echo wp_kses_post($product->get_sku() ? $product->get_sku() : esc_html__('N/A', 'weiboo')); ?></td>
         </tr>
         <tr>
-            <th><?php esc_html_e('Product Title', 'weiboo'); ?></th>
-            <td><?php echo esc_html($product->get_name()) ?></td>
-        </tr>
-        <tr>
-            <th><?php esc_html_e('Scale', 'weiboo'); ?></th>
-            <td>N/A</td>
-        </tr>
-        <tr>
-            <th><?php esc_html_e('Base Price', 'weiboo'); ?></th>
-            <td><?php echo esc_html($product->get_regular_price()); ?></td>
-        </tr>
-        <tr>
-            <th><?php esc_html_e('Discount Price', 'weiboo'); ?></th>
-            <td><?php echo esc_html($product->get_sale_price() ? $product->get_sale_price() : esc_html__('N/A', 'weiboo')); ?></td>
-        </tr>
-        <tr>
-            <th><?php esc_html_e('Description', 'weiboo'); ?></th>
-            <td><?php echo esc_html($product->get_description()); ?></td>
-        </tr>
-        <tr>
             <th><?php esc_html_e('Category', 'weiboo'); ?></th>
             <td><?php echo wc_get_product_category_list($product->get_id(), ', '); ?></td>
         </tr>
         <tr>
-            <th><?php esc_html_e('Type', 'weiboo'); ?></th>
-            <td><?php echo esc_html('N/A'); ?></td>
+            <th><?php esc_html_e('Brand', 'weiboo'); ?></th>
+            <td><?php
+                if (!empty($brands)) {
+                    foreach ($brands as $brand) {
+                        $brand_link = get_term_link($brand); 
+                        echo '<a href="' . esc_url($brand_link) . '">' . esc_html($brand->name) . '</a>';
+                    }
+                }else{
+                    echo "NULL";
+                }
+            ?></td>
         </tr>
-        <tr>
-            <th><?php esc_html_e('Available From', 'weiboo'); ?></th>
-            <td><?php echo esc_html('N/A'); ?></td>
-        </tr>
+        
     </table>
     <?php do_action('woocommerce_product_meta_end'); ?>
 </div>
