@@ -32,15 +32,15 @@ $brands = get_the_terms($product->get_id(), 'pwb-brand');
             <h6 class="text-uppercase">Specification</h6>
         </tr>
         <tr>
-            <th><?php esc_html_e('SKU', 'weiboo'); ?></th>
+            <th><?php esc_html_e('SKU:', 'weiboo'); ?></th>
             <td> <?php echo wp_kses_post($product->get_sku() ? $product->get_sku() : esc_html__('N/A', 'weiboo')); ?></td>
         </tr>
         <tr>
-            <th><?php esc_html_e('Category', 'weiboo'); ?></th>
+            <th><?php esc_html_e('Category:', 'weiboo'); ?></th>
             <td><?php echo wc_get_product_category_list($product->get_id(), ', '); ?></td>
         </tr>
         <tr>
-            <th><?php esc_html_e('Brand', 'weiboo'); ?></th>
+            <th><?php esc_html_e('Brand:', 'weiboo'); ?></th>
             <td><?php
                 if (!empty($brands)) {
                     foreach ($brands as $brand) {

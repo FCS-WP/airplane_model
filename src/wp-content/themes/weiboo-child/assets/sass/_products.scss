@@ -35,3 +35,28 @@
   padding-left: 20px !important;
   padding-right: 20px !important;
 }
+.woocommerce.single-product .product-type-variable .summary .product_title,
+.woocommerce.single-product .product-type-external .summary .product_title,
+.woocommerce.single-product .product-type-grouped .summary .product_title,
+.woocommerce.single-product .product-type-simple .summary .product_title {
+  padding-right: 30px;
+}
+
+.stock.outofstock{
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  bottom: 0px;
+  left: 0px;
+  height: 30px;
+  margin: 15px 0px 0px 0px;
+  align-items: center;
+}
+.product_meta table{
+  td,th{
+    border: none !important;
+  }
+  th{
+    width: 100px;
+  }
+}

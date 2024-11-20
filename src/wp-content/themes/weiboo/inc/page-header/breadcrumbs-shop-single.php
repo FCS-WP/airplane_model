@@ -42,7 +42,7 @@
                                 <?php if($content_banner !=''){
                                    echo esc_html($content_banner);
                                     } else {                                
-                                        echo esc_html__('Shop Details', 'weiboo');
+                                        echo esc_html__('Product Details', 'weiboo');
                                     }
                                 ?>
                             </h1>
@@ -83,7 +83,7 @@
                                     <?php if($content_banner !=''){
                                        echo esc_html($content_banner);
                                         } else {                                
-                                             echo esc_html__('Shop Details', 'weiboo');
+                                             echo esc_html__('Product Details', 'weiboo');
                                         }
                                     ?>
                                 </h1>
@@ -123,7 +123,7 @@ elseif(!empty($weiboo_option['breadcrumb_bg_color'])){
                                 <?php if($content_banner !=''){
                                    echo esc_html($content_banner);
                                     } else {                                
-                                         echo esc_html__('Shop Details', 'weiboo');
+                                         echo esc_html__('Product Details', 'weiboo');
                                     }
                                 ?>
                             </h1>
@@ -162,7 +162,7 @@ elseif(!empty($weiboo_option['breadcrumb_bg_color'])){
                                     <?php if($content_banner !=''){
                                        echo esc_html($content_banner);
                                         } else {                                
-                                            echo esc_html__('Shop Details', 'weiboo');
+                                            echo esc_html__('Product Details', 'weiboo');
                                         }
                                     ?>
                                 </h1>
