@@ -93,6 +93,90 @@ add_filter('posts_where', 'hide_private_products');
 function hide_private_products($where)
 {
     if (is_admin()) return $where;
-    global $wpdb;
-    return " $where AND {$wpdb->posts}.post_status != 'private' ";
+    if (is_shop() || is_archive() || is_singular()) {
+        global $wpdb;
+        return " $where AND {$wpdb->posts}.post_status != 'private' ";
+    } else {
+        return $where;
+    }
 }
+
+
+
+/*
+ * Customize the display of transfer information in woocommerce
+ *
+ */
+add_filter('woocommerce_bacs_accounts', '__return_false');
+
+add_action('woocommerce_email_before_order_table', 'zippy_email_instructions', 10, 3);
+function zippy_email_instructions($order, $sent_to_admin, $plain_text = false)
+{
+
+    if (! $sent_to_admin && 'bacs' === $order->get_payment_method() && $order->has_status('on-hold')) {
+        zippy_bank_details($order->get_id());
+    }
+}
+
+add_action('woocommerce_thankyou_bacs', 'zippy_thankyou_page');
+function zippy_thankyou_page($order_id)
+{
+    zippy_bank_details($order_id);
+}
+
+function zippy_bank_details($order_id = '')
+{
+    $bacs_accounts = get_option('woocommerce_bacs_accounts');
+    if (! empty($bacs_accounts)) {
+        ob_start();
+?>
+        <table style=" border: 1px solid #ddd; border-collapse: collapse; width: 100%; ">
+
+            <tr>
+                <td colspan="2" style="border: 1px solid #eaeaea;padding: 6px 10px;"><strong>Transfer information</strong></td>
+            </tr>
+            <?php
+            foreach ($bacs_accounts as $bacs_account) {
+                $bacs_account = (object) $bacs_account;
+                $account_name = $bacs_account->account_name;
+                $bank_name = $bacs_account->bank_name;
+                $stk = $bacs_account->account_number;
+                $icon = isset($bacs_account->iban) ? $bacs_account->iban : THEME_URL . '-child/assets/icons/paynow_client_qr.png';
+            ?>
+                <tr>
+                    <td style="width: 200px;border: 1px solid #eaeaea;padding: 6px 10px;"><?php if ($icon): ?><img id="imageToDownload" src="<?php echo $icon; ?>" alt="" /><?php endif; ?></td>
+                    <td style="border: 1px solid #eaeaea;padding: 6px 10px;">
+                        <strong>Account owner:</strong> <?php echo $account_name; ?><br>
+                        <strong>Transfer content:</strong> Order: <?php echo $order_id; ?>
+                    </td>
+                </tr>
+                <table>
+                    <script>
+                        console.log(document.getElementById("downloadBtn"));
+                        document.getElementById("downloadBtn").addEventListener("click", function() {
+
+                            const imageUrl = document.getElementById("imageToDownload").src;
+                            const link = document.createElement("a");
+                            link.href = imageUrl;
+                            link.download = 'airplane_model_qr.png';
+                            link.click();
+                        });
+                    </script>
+        <?php
+            }
+
+            echo ob_get_clean();;
+        }
+    }
+
+
+    add_action('woocommerce_email_before_order_table', 'zippy_woocommerce_email_before_order_table', 5);
+    add_action('woocommerce_thankyou_bacs', 'zippy_woocommerce_email_before_order_table', 5);
+    function zippy_woocommerce_email_before_order_table($order)
+    {
+        if (is_numeric($order)) $order = wc_get_order($order);
+        if ($order->get_payment_method() == 'bacs') {
+            echo '<p style=" color: #3e3c3c; font-size: 14px; border: 1px dashed #ff0000; padding: 5px; background: #fffdf3; line-height: 20px; ">
+        <strong style="color:red;">Note:</strong> Click <a id="downloadBtn" style=" color: #42a2cd; font-weight: 700; " href="#"> here </a> to save the QR code for payment</p>';
+        }
+    }
