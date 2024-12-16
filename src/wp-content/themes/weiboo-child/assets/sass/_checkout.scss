@@ -1,0 +1,10 @@
+#shipping_method {
+  label {
+    font-size: 10px;
+    display: flex !important;
+    flex-direction: column-reverse;
+  }
+}
+.woocommerce-checkout .woocommerce form.checkout #customer_details{
+  padding-right: 20px !important;
+}

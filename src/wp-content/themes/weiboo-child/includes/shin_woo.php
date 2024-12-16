@@ -84,15 +84,17 @@ function limit_quanity_products_update_cart($cart)
     }
 }
 
+
 /**
  * Hide Product Has Status Private
  *
  */
-add_filter('posts_where', 'hide_private_products');
+// add_filter('posts_where', 'hide_private_products');
 
 function hide_private_products($where)
 {
     if (is_admin()) return $where;
+
     if (is_shop() || is_archive() || is_singular()) {
         global $wpdb;
         return " $where AND {$wpdb->posts}.post_status != 'private' ";
@@ -100,8 +102,6 @@ function hide_private_products($where)
         return $where;
     }
 }
-
-
 
 /*
  * Customize the display of transfer information in woocommerce
@@ -162,7 +162,7 @@ function zippy_bank_details($order_id = '')
                             link.click();
                         });
                     </script>
-        <?php
+            <?php
             }
 
             echo ob_get_clean();;
@@ -177,9 +177,10 @@ function zippy_bank_details($order_id = '')
         if (is_numeric($order)) $order = wc_get_order($order);
         if ($order->get_payment_method() == 'bacs') {
             echo '<p style=" color: #3e3c3c; font-size: 14px; border: 1px dashed #ff0000; padding: 5px; background: #fffdf3; line-height: 20px; ">
-        <strong style="color:red;">Note:</strong> Click <a id="downloadBtn" style=" color: #42a2cd; font-weight: 700; " href="#"> here </a> to save the QR code for payment</p>';
+    <strong style="color:red;">Note:</strong> Click <a id="downloadBtn" style=" color: #42a2cd; font-weight: 700; " href="#"> here </a> to save the QR code for payment</p>';
         }
     }
+
 
     add_filter('woocommerce_products_admin_list_table_filters', 'zippy_featured_filter');
 
@@ -195,10 +196,10 @@ function zippy_bank_details($order_id = '')
         $output = '<select name="featured_choice" id="dropdown_featured_choice"><option value="">Filter by featured status</option>';
         $output .= '<option value="onlyfeatured" ';
         $output .= selected('onlyfeatured', $current_featured_choice, false);
-        $output .= '>Featured Only</option>';
+        $output .= '>New Arrivals</option>';
         $output .= '<option value="notfeatured" ';
         $output .= selected('notfeatured', $current_featured_choice, false);
-        $output .= '>Not Featured</option>';
+        $output .= '>Not New Arrival</option>';
         $output .= '</select>';
         echo $output;
     }
@@ -227,4 +228,69 @@ function zippy_bank_details($order_id = '')
             }
         }
         return $query;
+    }
+
+    add_action('woocommerce_checkout_process', 'wc_minimum_order_amount');
+    add_action('woocommerce_before_cart', 'wc_minimum_order_amount');
+    add_action('woocommerce_before_checkout_form', 'wc_minimum_order_amount');
+    function wc_minimum_order_amount()
+    {
+        $min_amount = 50; // Min subtotal required
+
+        $subtotal   = 0; // Initializing
+
+        // Loop through cart items
+        foreach (WC()->cart->get_cart() as $cart_item) {
+            $subtotal += $cart_item['line_subtotal'] + $cart_item['line_subtotal_tax'];
+        }
+
+        if ($subtotal < $min_amount) {
+            $message = sprintf(
+                'Your current order total is %s — you must have an order with a minimum of %s to place your order ',
+                wc_price($subtotal),
+                wc_price($min_amount)
+            );
+
+            if (is_cart()) {
+                wc_print_notice($message, 'error');
+            } else {
+                wc_add_notice($message, 'error');
+            }
+        }
+    }
+
+    add_filter('woocommerce_quantity_input_max', 'zippy_woocommerce_quantity_input_max_filter', 10, 2);
+    function zippy_woocommerce_quantity_input_max_filter($empty, $product)
+    {
+            ?>
+            <script type="text/javascript">
+                "use strict";
+                $ = jQuery;
+
+                jQuery(document).ready(function($) {
+
+                    $(
+                        ".quantity"
+                    ).each(function() {
+                        $(this).on("click", ".qty_button.plus", function() {
+                            maximum_quantity_order($(this));
+                        });
+                    });
+
+                    function maximum_quantity_order(button) {
+                        $('.quantity .input-text').on('change', function() {
+                            console.log($(this).val())
+
+                            if ($(this).val() > 6) {
+                                alert('Maximum order quantity of products is 6 items');
+                                $(this).val(6);
+
+                            }
+
+                        });
+                    }
+                });
+            </script>
+        <?php
+        return $empty;
     }

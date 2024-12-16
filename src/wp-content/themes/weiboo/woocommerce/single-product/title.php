@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Single Product title
  *
@@ -14,24 +15,25 @@
  * @package    WooCommerce\Templates
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
 	exit; // Exit if accessed directly.
 }
 
 
 $post_id = get_the_ID();
-$product = wc_get_product( $post_id ); 
+$product = wc_get_product($post_id);
 $status = $product->get_stock_status();
 
 // 'onbackorder' , 'outofstock' , 'instock'
 
-if( $status == 'instock' ){
-	$stock = 'In Stock';
-} elseif( $status == 'onbackorder' ){
+if ($status == 'instock') {
+	$number = $product->get_stock_quantity();
+	$stock = $number . ' In Stock';
+} elseif ($status == 'onbackorder') {
 	$stock = '<i class="rt-check"></i> Backorders';
-} elseif( $status == 'outofstock' ){
+} elseif ($status == 'outofstock') {
 	$stock = 'Out Of Stock';
-}else{
+} else {
 	$stock = 'In Stock';
 }
 ?>
